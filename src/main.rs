@@ -52,8 +52,19 @@ fn main() -> Result <(), ImageDataErrors>{
     let combined_data = combine_images(image_s, image_p);
     output.set_data(combined_data);
     // println!("{:?}", args);
+    println!("output: {}\n", output.data.len());
 
-    image::save_buffer_with_format(output.name, &output.data, output.width, output.height, image::ColorType::Rgba8, image_format_1).unwrap();
+    // image::save_buffer_with_format(output.name, &output.data, output.width, output.height, image::ColorType::Rgba8, image_format_1).unwrap();
+    if let Err(e) = image::save_buffer_with_format(
+        output.name,
+        &output.data,
+        output.width,
+        output.height,
+        image::ColorType::Rgb8,
+        image_format_1,
+    ) {
+        eprintln!("Failed to save image: {}", e);
+    }
     Ok(())
 }
 
